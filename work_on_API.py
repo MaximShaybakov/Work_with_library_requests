@@ -1,7 +1,7 @@
 import requests
 # from pprint import pprint
 
-class Hero():
+class Hero:
 
     def __init__(self, name):
         self.name = name
