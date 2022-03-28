@@ -12,7 +12,6 @@ class Hero:
 
     def ent_intel_hero(self):
         self.intelligence = int(self.search_intelligence()['results'][0]['powerstats']['intelligence'])
-        # print(self.intelligence)
         return self.intelligence
 
 Thanos = Hero('Thanos')
