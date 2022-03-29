@@ -2,11 +2,6 @@ import requests
 import os
 from pprint import pprint
 
-with open('text.txt') as file:
-    TOKEN = file.read()
-
-disk_file_path = "path:/search_info.py"
-
 class YaDiskAPI:
 
     def __init__(self, token):
@@ -33,10 +28,10 @@ class YaDiskAPI:
         # pprint(response.json())
         return response.json()
 
-    def upload_file_to_disk(self, disk_path_to_file: str, name: str):
+    def upload_file_to_disk(self, disk_file_path: str, name: str):
         href = self.get_upload_link(disk_file_path=disk_file_path).get("href", "")
         headers = self.get_headers()
-        response = requests.put(href, data=open('search_info.py', 'rb'))
+        response = requests.put(href, data=open(disk_path_to_file, 'rb'))
         response.raise_for_status()
         if response.status_code == 201:
             print('Success!')
@@ -45,7 +40,16 @@ class YaDiskAPI:
 
 
 if __name__ == '__main__':
+    with open('text.txt') as file:
+        TOKEN = file.read()
+
+    # TOKEN = ''
+
+    disk_path_to_file = os.path.abspath("") # полный путь к загружаемому файлу
+    disk_file_path = "disk:/search_info.py"
+    name = 'search_info.py'
 
     test1 = YaDiskAPI(TOKEN)
     test1.get_resp()
-    test1.get_upload_link("disk:/['items'][0]")
+    test1.get_upload_link(disk_file_path)
+    test1.upload_file_to_disk(disk_file_path, name)
